@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const next = require('next');
 const { parse } = require('url');
 
+const models = require('./db/model');
+
 const dev = process.env.NODE_ENV || "development";
 const PORT = process.env.PORT || 3000;
 
@@ -29,8 +31,8 @@ app.prepare().then( () => {
   server.use(bodyParser.json());
 
   server.get("*", (req, res) => {
-    const parcedUrl = parse(req.url, true);
-    const { pathname, query={} } = parcedUrl;
+    const parsedUrl = parse(req.url, true);
+    const { pathname, query={} } = parsedUrl;
 
     const route = routes[pathname];
 
@@ -41,10 +43,14 @@ app.prepare().then( () => {
     }
   });
 
-  server.listen(PORT, err => {
-    if (err) throw err;
-    console.log( `Server started on port: ${PORT}` )
-  })
+  models.sequelize.sync().then(function(){
+    server.listen(PORT, err => {
+      if (err) throw err;
+      console.log( `Server started on port: ${PORT}` )
+    });
+  });
+
+
 
 }).catch( err => {
   console.log(err);
