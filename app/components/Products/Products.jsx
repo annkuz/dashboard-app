@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
-const listBoxWidth = 350;
+import { listBoxWidth } from "./constants";
 
 const styles = () => ({
   productsBox: {

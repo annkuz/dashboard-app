@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { withStyles } from '@material-ui/core/styles';
-
-const sidebarWidth = 240;
+import { sidebarWidth } from "./constants";
 
 const styles = theme => ({
   root: {
